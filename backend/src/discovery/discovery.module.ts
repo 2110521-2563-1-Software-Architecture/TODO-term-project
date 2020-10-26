@@ -1,4 +1,8 @@
 import { Module } from '@nestjs/common';
+import { DiscoveryService } from '@nestjs/core';
 
-@Module({})
-export class DiscoveryModule {}
+@Module({
+    providers: [DiscoveryService],
+    exports: [DiscoveryService],
+})
+export class DiscoveryModule { }
