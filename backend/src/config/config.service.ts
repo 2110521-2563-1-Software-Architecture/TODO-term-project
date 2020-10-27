@@ -5,7 +5,7 @@ export class ConfigService {
     private getEnv(name: string): string {
         const env = process.env[name];
         if (name) {
-            return name;
+            return env;
         }
         throw new Error(`${name} is undefined`);
     }
