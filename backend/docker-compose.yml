@@ -1,14 +1,14 @@
 version: "3.7"
 
 services:
-  api:
-    container_name: scrumble-api
+  backend:
+    container_name: todo-backend
     image: node:12
     restart: unless-stopped
     volumes:
       - .:/server/app
       - storage:/server/storage
-    command: sh -c 'cd /server && yarn && yarn start:dev'
+    command: sh -c 'cd /server/app && yarn && yarn start:dev'
     env_file:
       - .env
     ports:
