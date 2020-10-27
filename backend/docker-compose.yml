@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  api:
+  backend:
     container_name: todo-backend
     image: node:12
     restart: unless-stopped
