@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./backend:/server/app
-      - storage:/server/storage
+      - storage_backend:/server/storage
     command: sh -c 'cd /server/app && yarn && yarn start:dev'
     env_file:
       - ./backend/.env
@@ -24,5 +24,15 @@ services:
     ports:
       - "8080:8080"
 
+  redis:
+    container_name: todo-redis
+    image: redis:6-alpine
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    volumes:
+      - storage_redis:/data
+
 volumes:
-  storage:
+  storage_backend:
+  storage_redis:
