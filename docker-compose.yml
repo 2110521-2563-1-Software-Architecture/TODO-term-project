@@ -7,7 +7,6 @@ services:
     restart: unless-stopped
     volumes:
       - ./backend:/server/app
-      - storage_backend:/server/storage
     command: sh -c 'cd /server/app && go mod download && go run main.go'
     env_file:
       - ./backend/.env
@@ -34,5 +33,4 @@ services:
       - storage_redis:/data
 
 volumes:
-  storage_backend:
   storage_redis:
