@@ -4,10 +4,10 @@ import (
 	"net"
 	"testing"
 
-	"github.com/veggiedefender/torrent-client/bitfield"
-	"github.com/veggiedefender/torrent-client/handshake"
+	"github.com/2110521-2563-1-Software-Architecture/TODO-term-project/tree/master/backend/bitfield"
+	"github.com/2110521-2563-1-Software-Architecture/TODO-term-project/tree/master/backend/handshake"
 
-	"github.com/veggiedefender/torrent-client/message"
+	"github.com/2110521-2563-1-Software-Architecture/TODO-term-project/tree/master/backend/message"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
