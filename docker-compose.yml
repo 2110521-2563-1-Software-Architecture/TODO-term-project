@@ -3,16 +3,15 @@ version: "3.7"
 services:
   backend:
     container_name: todo-backend
-    image: node:12
+    image: golang:1.15-alpine
     restart: unless-stopped
     volumes:
       - ./backend:/server/app
-      - storage_backend:/server/storage
-    command: sh -c 'cd /server/app && yarn && yarn start:dev'
+    command: sh -c 'cd /server/app && go mod download && go run main.go'
     env_file:
       - ./backend/.env
     ports:
-      - "3000:3000"
+      - "9000:9000"     # provisional based on default port of Revel, should later be changed to what we intended to use
 
   frontend:
     container_name: todo-frontend
@@ -34,5 +33,4 @@ services:
       - storage_redis:/data
 
 volumes:
-  storage_backend:
   storage_redis:
