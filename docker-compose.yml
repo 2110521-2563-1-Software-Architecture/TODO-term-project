@@ -6,20 +6,22 @@ services:
     image: golang:1.15-alpine
     restart: unless-stopped
     volumes:
-      - ./backend:/server/app
-    command: sh -c 'cd /server/app && go mod download && go run main.go'
+      - ./backend:/server/backend
+    working_dir: /server/backend
+    command: sh -c 'go mod download && go run main.go'
     env_file:
       - ./backend/.env
     ports:
-      - "9000:9000"     # provisional based on default port of Revel, should later be changed to what we intended to use
+      - "9000:9000"
 
   frontend:
     container_name: todo-frontend
     image: node:12
     restart: unless-stopped
     volumes:
-        - ./frontend:/server/frontend
-    command: sh -c 'cd /server/frontend && yarn && yarn serve'
+      - ./frontend:/server/frontend
+    working_dir: /server/frontend
+    command: sh -c 'yarn && yarn serve'
     ports:
       - "8080:8080"
 
