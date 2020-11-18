@@ -2,20 +2,26 @@ package main
 
 import (
 	"context"
-
-	"github.com/go-redis/redis/v8"
+	"log"
+	"net"
 )
 
 var ctx = context.Background()
 
 func main() {
-	rdb := redis.NewClient(&redis.Options{
-		Addr:     "redis:6379",
-		Password: "",
-		DB:       0,
-	})
-	err := rdb.Set(ctx, "key", "value", 0).Err()
+	ln, err := net.Listen("tcp", ":5000")
 	if err != nil {
 		panic(err)
+	}
+	defer ln.Close()
+
+	log.Println("Listening...")
+	for {
+		conn, err := ln.Accept()
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+		go handleConnection(conn)
 	}
 }
