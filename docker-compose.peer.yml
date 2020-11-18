@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+  peer:
+    container_name: todo-peer
+    image: golang:1.15-alpine
+    restart: unless-stopped
+    volumes:
+      - ./peer:/app/peer
+    working_dir: /app/peer
+    command: sh -c 'go mod download && go run main.go'
+    env_file:
+      - ./peer/.env
+    ports:
+      - "9000:9000"
+
+  frontend:
+    container_name: todo-frontend
+    image: node:12
+    restart: unless-stopped
+    volumes:
+      - ./frontend:/app/frontend
+    working_dir: /app/frontend
+    command: sh -c 'yarn && yarn serve'
+    ports:
+      - "8080:8080"
