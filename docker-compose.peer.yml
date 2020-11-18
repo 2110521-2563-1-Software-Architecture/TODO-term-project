@@ -8,7 +8,7 @@ services:
     volumes:
       - ./peer:/app/peer
     working_dir: /app/peer
-    command: sh -c 'go mod download && go run main.go'
+    command: sh -c 'go mod download && go run *.go'
     env_file:
       - ./peer/.env
     ports:

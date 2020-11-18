@@ -8,7 +8,7 @@ services:
     volumes:
       - ./tracker:/app/tracker
     working_dir: /app/tracker
-    command: sh -c 'go mod download && go run main.go'
+    command: sh -c 'go mod download && go run *.go'
     env_file:
       - ./tracker/.env
     ports:
