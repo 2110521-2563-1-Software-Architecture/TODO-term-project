@@ -12,7 +12,7 @@ services:
     env_file:
       - ./tracker/.env
     ports:
-      - "8000:8000"
+      - "5000:5000"
 
   redis:
     container_name: todo-redis
