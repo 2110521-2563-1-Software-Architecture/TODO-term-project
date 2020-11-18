@@ -20,7 +20,7 @@ func main() {
 	// })
 	// e.Logger.Fatal(e.Start(":9000"))
 
-	conn, err := net.Dial("tcp", ":5000")
+	conn, err := net.Dial("tcp", "tracker:5000")
 	if err != nil {
 		log.Fatalln(err)
 	}
