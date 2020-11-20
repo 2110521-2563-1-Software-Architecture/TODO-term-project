@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  tracker:
+    container_name: todo-tracker
+    image: golang:1.15-alpine
+    restart: on-failure
+    volumes:
+      - ./tracker:/app/tracker
+    working_dir: /app/tracker
+    command: sh -c 'go mod download && go run *.go'
+    env_file:
+      - ./tracker/.env
+    ports:
+      - "5000:5000"
+
+  redis:
+    container_name: todo-redis
+    image: redis:6-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - storage_redis:/data
+
+volumes:
+  storage_redis:
