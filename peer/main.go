@@ -20,7 +20,9 @@ func main() {
 	// })
 	// e.Logger.Fatal(e.Start(":9000"))
 
-	conn, err := net.Dial("tcp", "tracker:5000")
+	go fileHandler();
+
+	conn, err := net.Dial("tcp", "localhost:5000")
 	if err != nil {
 		log.Fatalln(err)
 	}
