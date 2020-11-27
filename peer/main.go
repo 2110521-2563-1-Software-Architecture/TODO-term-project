@@ -22,7 +22,7 @@ func main() {
 
 	go fileHandler();
 
-	conn, err := net.Dial("tcp", "localhost:5000")
+	conn, err := net.Dial("tcp", "tracker:5000")
 	if err != nil {
 		log.Fatalln(err)
 	}
