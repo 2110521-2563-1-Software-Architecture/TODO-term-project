@@ -8,7 +8,7 @@ import (
 )
 
 func Port() string {
-	p := os.Getenv("USER_SERVICE_PORT")
+	p := os.Getenv("PEER_SERVICE_PORT")
 	if len(strings.TrimSpace(p)) == 0 {
 		return ":9000"
 	}

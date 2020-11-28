@@ -37,7 +37,7 @@ services:
     working_dir: /app/peer
     command: sh -c 'go mod download && go run *.go'
     environment: 
-      - USER_SERVICE_PORT=9000
+      - PEER_SERVICE_PORT=9000
       - CONSUL_HTTP_ADDR=consul:8500 
       - REGISTRATION_ID=0
     ports: 
@@ -56,7 +56,7 @@ services:
   #   working_dir: /app/peer
   #   command: sh -c 'go mod download && go run *.go'
   #   environment: 
-  #     - USER_SERVICE_PORT=9000
+  #     - PEER_SERVICE_PORT=9000
   #     - CONSUL_HTTP_ADDR=consul:8500 
   #     - REGISTRATION_ID=1
   #   ports: 
