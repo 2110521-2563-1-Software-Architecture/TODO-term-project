@@ -67,7 +67,21 @@ services:
   #   networks:
   #     - cdn-net
 
-
+  nginx:
+    build: ./nginx/
+    image: seges/nginx-consul
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "443:443"
+    volumes:
+      - "./nginx/templates/template.ctmpl:/etc/consul-template/templates/template.ctmpl"
+      - "./nginx/conf:/etc/consul-template/conf"
+    depends_on:
+      - consul
+    networks:
+      - cdn-net
+  
 networks:
   cdn-net:
     driver: bridge
