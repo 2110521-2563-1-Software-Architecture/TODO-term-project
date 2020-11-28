@@ -10,23 +10,24 @@ services:
     networks:
       - cdn-net
 
-  # tracker-service:
-  #   container_name: todo-tracker
-  #   image: golang:1.15-alpine
-  #   restart: on-failure
-  #   volumes:
-  #     - ./tracker:/app/tracker
-  #   working_dir: /app/tracker
-  #   command: sh -c 'go mod download && go run *.go'
-  #   environment: 
-  #     - PRODUCT_SERVICE_PORT=5000
-  #     - CONSUL_HTTP_ADDR=consul:8500  
-  #   ports: 
-  #     - "5000:5000"
-  #   depends_on:
-  #     - consul
-  #   networks:
-  #     - cdn-net
+  tracker-service:
+    container_name: todo-tracker
+    image: golang:1.15-alpine
+    restart: on-failure
+    volumes:
+      - ./tracker:/app/tracker
+    working_dir: /app/tracker
+    command: sh -c 'go mod download && go run *.go'
+    environment: 
+      - TRACKER_SERVICE_PORT=5000
+      - CONSUL_HTTP_ADDR=consul:8500  
+      - REGISTRATION_ID=0
+    ports: 
+      - "5000:5000"
+    depends_on:
+      - consul
+    networks:
+      - cdn-net
 
   peer-service-0:
     container_name: todo-peer
