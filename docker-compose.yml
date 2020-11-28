@@ -1,0 +1,71 @@
+version: '3.8'
+
+services: 
+  consul:
+    image: consul
+    ports:
+      - "8300:8300"
+      - "8400:8400"
+      - "8500:8500"
+    networks:
+      - cdn-net
+
+  # tracker-service:
+  #   container_name: todo-tracker
+  #   image: golang:1.15-alpine
+  #   restart: on-failure
+  #   volumes:
+  #     - ./tracker:/app/tracker
+  #   working_dir: /app/tracker
+  #   command: sh -c 'go mod download && go run *.go'
+  #   environment: 
+  #     - PRODUCT_SERVICE_PORT=5000
+  #     - CONSUL_HTTP_ADDR=consul:8500  
+  #   ports: 
+  #     - "5000:5000"
+  #   depends_on:
+  #     - consul
+  #   networks:
+  #     - cdn-net
+
+  peer-service-0:
+    container_name: todo-peer
+    image: golang:1.15-alpine
+    restart: unless-stopped
+    volumes:
+      - ./peer-service:/app/peer-service
+    working_dir: /app/peer-service
+    command: sh -c 'go mod download && go run *.go'
+    environment: 
+      - USER_SERVICE_PORT=9000
+      - CONSUL_HTTP_ADDR=consul:8500 
+      - REGISTRATION_ID=0
+    ports: 
+      - "9001:9000" 
+    depends_on:
+      - consul
+    networks:
+      - cdn-net
+
+  peer-service-1:
+    container_name: todo-peer-1
+    image: golang:1.15-alpine
+    restart: unless-stopped
+    volumes:
+      - ./peer-service:/app/peer-service
+    working_dir: /app/peer-service
+    command: sh -c 'go mod download && go run *.go'
+    environment: 
+      - USER_SERVICE_PORT=9000
+      - CONSUL_HTTP_ADDR=consul:8500 
+      - REGISTRATION_ID=1
+    ports: 
+      - "9002:9000" 
+    depends_on:
+      - consul
+    networks:
+      - cdn-net
+
+networks:
+  cdn-net:
+    driver: bridge
