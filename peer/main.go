@@ -20,6 +20,8 @@ func main() {
 	// })
 	// e.Logger.Fatal(e.Start(":9000"))
 
+	go fileHandler();
+
 	conn, err := net.Dial("tcp", "tracker:5000")
 	if err != nil {
 		log.Fatalln(err)
