@@ -30,7 +30,7 @@ services:
       - cdn-net
 
   peer-service-0:
-    container_name: todo-peer
+    container_name: todo-peer-0
     image: golang:1.15-alpine
     restart: unless-stopped
     volumes:
@@ -49,7 +49,7 @@ services:
       - cdn-net
 
   # peer-service-1:
-  #   container_name: todo-peer
+  #   container_name: todo-peer-1
   #   image: golang:1.15-alpine
   #   restart: unless-stopped
   #   volumes:
