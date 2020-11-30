@@ -1,33 +1,33 @@
 version: '3.8'
 
 services: 
-  consul:
-    image: consul
-    ports:
-      - "8300:8300"
-      - "8400:8400"
-      - "8500:8500"
-    networks:
-      - cdn-net
+  # consul:
+  #   image: consul
+  #   ports:
+  #     - "8300:8300"
+  #     - "8400:8400"
+  #     - "8500:8500"
+  #   networks:
+  #     - cdn-net
 
-  tracker-service:
-    container_name: todo-tracker
-    image: golang:1.15-alpine
-    restart: on-failure
-    volumes:
-      - ./tracker:/app/tracker
-    working_dir: /app/tracker
-    command: sh -c 'go mod download && go run *.go'
-    environment: 
-      - TRACKER_SERVICE_PORT=5000
-      - CONSUL_HTTP_ADDR=consul:8500  
-      - REGISTRATION_ID=0
-    ports: 
-      - "5000:5000"
-    depends_on:
-      - consul
-    networks:
-      - cdn-net
+  # tracker-service:
+  #   container_name: todo-tracker
+  #   image: golang:1.15-alpine
+  #   restart: on-failure
+  #   volumes:
+  #     - ./tracker:/app/tracker
+  #   working_dir: /app/tracker
+  #   command: sh -c 'go mod download && go run *.go'
+  #   environment: 
+  #     - TRACKER_SERVICE_PORT=5000
+  #     - CONSUL_HTTP_ADDR=consul:8500  
+  #     - REGISTRATION_ID=0
+  #   ports: 
+  #     - "5000:5000"
+  #   depends_on:
+  #     - consul
+  #   networks:
+  #     - cdn-net
 
   peer-service-0:
     container_name: todo-peer-0
@@ -43,8 +43,8 @@ services:
       - REGISTRATION_ID=0
     ports: 
       - "9001:9000" 
-    depends_on:
-      - consul
+    # depends_on:
+    #   - consul
     networks:
       - cdn-net
 
@@ -67,20 +67,20 @@ services:
   #   networks:
   #     - cdn-net
 
-  nginx:
-    build: ./nginx/
-    image: seges/nginx-consul
-    ports:
-      - "80:80"
-      - "8080:8080"
-      - "443:443"
-    volumes:
-      - "./nginx/templates/template.ctmpl:/etc/consul-template/templates/template.ctmpl"
-      - "./nginx/conf:/etc/consul-template/conf"
-    depends_on:
-      - consul
-    networks:
-      - cdn-net
+  # nginx:
+  #   build: ./nginx/
+  #   image: seges/nginx-consul
+  #   ports:
+  #     - "80:80"
+  #     - "8080:8080"
+  #     - "443:443"
+  #   volumes:
+  #     - "./nginx/templates/template.ctmpl:/etc/consul-template/templates/template.ctmpl"
+  #     - "./nginx/conf:/etc/consul-template/conf"
+  #   depends_on:
+  #     - consul
+  #   networks:
+  #     - cdn-net
   
 networks:
   cdn-net:

@@ -23,5 +23,6 @@ func SetupRouter() *gin.Engine {
 
 	r.POST("/uploadFile", fileManager.UploadFileToPeer)
 	r.GET("/downloadFile/:name", fileManager.DownloadFileFromPeer)
+	r.GET("/test/:name", fileManager.Test)
 	return r
 }
