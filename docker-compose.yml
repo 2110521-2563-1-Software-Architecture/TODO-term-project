@@ -82,6 +82,20 @@ services:
     networks:
       - cdn-net
   
+  redis:
+    container_name: todo-redis
+    image: redis:6-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - storage_redis:/data
+    networks:
+      - cdn-net
+
+volumes:
+  storage_redis:
+
 networks:
   cdn-net:
     driver: bridge
