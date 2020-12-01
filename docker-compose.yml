@@ -1,7 +1,8 @@
-version: '3.8'
+version: "3.8"
 
 services: 
   consul:
+    container_name: todo-consul
     image: consul
     ports:
       - "8300:8300"
@@ -10,7 +11,7 @@ services:
     networks:
       - cdn-net
 
-  tracker-service:
+  tracker:
     container_name: todo-tracker
     image: golang:1.15-alpine
     restart: on-failure
@@ -26,10 +27,11 @@ services:
       - "5000:5000"
     depends_on:
       - consul
+      - redis
     networks:
       - cdn-net
 
-  peer-service-0:
+  peer-0:
     container_name: todo-peer-0
     image: golang:1.15-alpine
     restart: unless-stopped
@@ -48,7 +50,7 @@ services:
     networks:
       - cdn-net
 
-  # peer-service-1:
+  # peer-1:
   #   container_name: todo-peer-1
   #   image: golang:1.15-alpine
   #   restart: unless-stopped
@@ -68,6 +70,7 @@ services:
   #     - cdn-net
 
   nginx:
+    container_name: todo-nginx
     build: ./nginx/
     image: seges/nginx-consul
     ports:
