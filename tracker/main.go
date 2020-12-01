@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	consul.RegisterServiceWithConsul()
+	consul.RegisterTrackerWithConsul()
 	r := routers.SetupRouter()
 	r.Run(services.Port())
 }
