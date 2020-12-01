@@ -32,6 +32,7 @@ func SetupRouter() *gin.Engine {
 	fileService := services.NewFileService(rdb)
 	fileController := controllers.NewFileController(fileService)
 
+	r.GET("/files", fileController.GetAllFileNames)
 	r.GET("/file", fileController.GetPeerWithFile)
 	r.POST("/file", fileController.AddFileToPeer)
 	return r

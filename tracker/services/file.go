@@ -18,6 +18,10 @@ func NewFileService(rdb *redis.Client) *FileService {
 	}
 }
 
+func (s *FileService) GetAllFileNames() ([]string, error) {
+	return s.rdb.Keys(ctx, "*").Result()
+}
+
 func (s *FileService) GetPeersWithFile(fileName string) ([]string, error) {
 	return s.rdb.SMembers(ctx, fileName).Result()
 }

@@ -22,6 +22,19 @@ func NewFileController(svc *s.FileService) *FileController {
 	}
 }
 
+func (con *FileController) GetAllFileNames(c *gin.Context) {
+	result, err := con.service.GetAllFileNames()
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"message": "File names not found",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"result": result,
+	})
+}
+
 func (con *FileController) GetPeerWithFile(c *gin.Context) {
 	fileName := c.Query("name")
 	if fileName == "" {
