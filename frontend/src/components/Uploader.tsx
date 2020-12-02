@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { uploadFile } from '../services/file-service'
 
 interface IProps {

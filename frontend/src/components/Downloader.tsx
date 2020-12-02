@@ -12,6 +12,10 @@ interface DownloaderState {
 export default class Downloader extends React.Component<IProps,DownloaderState> {
     constructor(props: any) {
         super(props)
+
+        this.state = {
+            files: []
+        }
     }
 
     async componentDidMount() {
@@ -24,7 +28,7 @@ export default class Downloader extends React.Component<IProps,DownloaderState> 
     generateFileData(fileinfo: any) {
         return (
             <div>
-                <a href={`url/${fileinfo}`} target="_blank">fileinfo</a>
+                <a href={`localhost:9000/downloadFile/${fileinfo}`} target="_blank" rel="noreferrer">{fileinfo}</a>
             </div>
         )
     }

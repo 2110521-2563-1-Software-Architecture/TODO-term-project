@@ -1,7 +1,7 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Uploader from './components/Uploader';
+import Downloader from './components/Downloader';
 import {
   BrowserRouter as Router,
   Switch,
@@ -29,6 +29,9 @@ function App() {
         <Switch>
           <Route path="/upload">
             <Uploader />
+          </Route>
+          <Route path="/download">
+            <Downloader />
           </Route>
         </Switch>
       </div>
