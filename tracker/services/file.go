@@ -23,7 +23,37 @@ func (s *FileService) GetAllFileNames() ([]string, error) {
 }
 
 func (s *FileService) GetPeersWithFile(fileName string) ([]string, error) {
-	return s.rdb.SMembers(ctx, fileName).Result()
+	members, err := s.rdb.SMembers(ctx, fileName).Result()
+	if err != nil {
+		return []string{}, err
+	}
+
+	peers, err := LookupPeersWithConsul()
+	if err != nil {
+		return []string{}, err
+	}
+
+	var result, removedPeers []string
+	for _, m := range members {
+		isMember := false
+		for _, p := range peers {
+			if m == p {
+				isMember = true
+				break
+			}
+		}
+		if isMember {
+			result = append(result, m)
+		} else {
+			removedPeers = append(removedPeers, m)
+		}
+	}
+	err = s.rdb.SRem(ctx, fileName, removedPeers).Err()
+	if err != nil {
+		return []string{}, nil
+	}
+
+	return result, nil
 }
 
 func (s *FileService) AddFileToPeer(fileName string, peerAddr string) error {

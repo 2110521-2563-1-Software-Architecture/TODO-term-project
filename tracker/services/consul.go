@@ -1,12 +1,10 @@
-package consul
+package services
 
 import (
 	"fmt"
 	"log"
 	"os"
 	"strconv"
-
-	"tracker/services"
 
 	consulapi "github.com/hashicorp/consul/api"
 )
@@ -23,9 +21,9 @@ func RegisterTrackerWithConsul() {
 	id := os.Getenv("REGISTRATION_ID")
 	registration.ID = "tracker-service-" + id
 	registration.Name = "tracker-service"
-	address := services.Hostname()
+	address := Hostname()
 	registration.Address = address
-	p, err := strconv.Atoi(services.Port()[1:len(services.Port())])
+	p, err := strconv.Atoi(Port()[1:len(Port())])
 	if err != nil {
 		log.Fatalln(err)
 	}
