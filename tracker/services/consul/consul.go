@@ -37,20 +37,23 @@ func RegisterTrackerWithConsul() {
 	consul.Agent().ServiceRegister(registration)
 }
 
-func LookupPeersWithConsul() (string, error) {
+func LookupPeersWithConsul() ([]string, error) {
 	config := consulapi.DefaultConfig()
 	consul, err := consulapi.NewClient(config)
 	if err != nil {
-		return "", err
+		return []string{}, err
 	}
 
-	services, err := consul.Agent().ServicesWithFilter("peer-service")
+	services, err := consul.Agent().ServicesWithFilter("Service == \"peer-service\"")
 	if err != nil {
-		return "", err
+		return []string{}, err
 	}
-	svc := services["peer-service"]
-	addr := svc.Address
-	port := svc.Port
 
-	return fmt.Sprintf("http://%s:%v", addr, port), nil
+	var result []string
+
+	for _, val := range services {
+		addr := fmt.Sprintf("http://%s:%v", val.Address, val.Port)
+		result = append(result, addr)
+	}
+	return result, nil
 }
