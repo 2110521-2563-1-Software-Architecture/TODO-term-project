@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"tracker/controllers"
 	"tracker/services"
-	"tracker/services/consul"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
@@ -38,7 +37,7 @@ func SetupRouter() *gin.Engine {
 	r.POST("/file", fileController.AddFileToPeer)
 
 	r.GET("/peers", func(c *gin.Context) {
-		peers, err := consul.LookupPeersWithConsul()
+		peers, err := services.LookupPeersWithConsul()
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 				"message": err.Error(),
